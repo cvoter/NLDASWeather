@@ -13,8 +13,9 @@
 % Press = met(:,7); %pa
 % SPFH = met(:,8); %kg/kg
 
-%Timeseries is continuous hourly data, starting at the beginning of a water
-%year and continuing for some number of complete water years.
+%Also assumees timeseries is continuous hourly data, starting at the
+%beginning of a water year and continuing for some number of complete water
+%years.
 
 close all; clear all; clc;
 
