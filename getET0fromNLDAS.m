@@ -31,10 +31,10 @@ longM = 88.448950; %longitude of the measurement site [degrees west of Greenwich
 
 %% DEFINE TIMING
 %Starting water year-type
-%  0 = include leap year, e.g. WY1999
-%  1 = just after leap year, e.g. WY2000
-%  2 = next year after leap year, e.g. WY2001
-%  3 = next year after that, e.g. WY2002
+%  0 = include leap year, e.g. WY2000
+%  1 = just after leap year, e.g. WY2001
+%  2 = next year after leap year, e.g. WY2002
+%  3 = next year after that, e.g. WY2003
 startYr = 0; %starting water year type
 nYears = 1; %number of full water years to analyze
 
