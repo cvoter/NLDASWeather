@@ -20,11 +20,11 @@
 close all; clear all; clc;
 
 %% DEFINE PATHS AND FILENAMES
-nldasFile = 'FondDuLac.1983.2013.1hr.txt';
+nldasFile = 'FondDuLac.WY83.WY13.1hr.txt';
 
 %% DEFINE LOCATION
 %Note that NLDAS datasets are recorded in UTC (Greenwich Mean Time), so longZ = 0.
-elev = 265; %elevation [m]
+elev = 232; %elevation [m]
 lat = 43.773782; %[degrees]
 longZ = 0; %longitude of the center of the local time zone [degrees west of Greenwich]
 longM = 88.448950; %longitude of the measurement site [degrees west of Greenwich]
@@ -35,8 +35,8 @@ longM = 88.448950; %longitude of the measurement site [degrees west of Greenwich
 %  1 = just after leap year, e.g. WY2001
 %  2 = next year after leap year, e.g. WY2002
 %  3 = next year after that, e.g. WY2003
-startYr = 0; %starting water year type
-nYears = 1; %number of full water years to analyze
+startYr = 3; %starting water year type
+nYears = 31; %number of full water years to analyze
 
 %% CALCULATE ET0
 %Load forcing data
