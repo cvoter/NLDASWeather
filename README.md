@@ -38,7 +38,7 @@ To read forcing data from *.grb files into a *.txt file, this approach requires 
 1. **Install the program _wgrib_** on your system.
     - Source code available [here](http://www.cpc.ncep.noaa.gov/products/wesley/wgrib.html)
     - Compile within shell, e.g.: gcc wgrib.c -o wgrib
-	- Note: I have trouble getting wgrib to work properly on Windows (with either GitBash or cygwin as the shell)
+	- Note: I have trouble getting wgrib to work properly on Windows (with either GitBash or cygwin as the shell). On linux, simply having the compiled wgrib within your working directory is sufficient.
 2. **Modify _batch.get_nldas_** for your situation. Generally, this should include:  
   "/path/to/NLDAS/data"  
   "desiredOutputFilename.txt"  
