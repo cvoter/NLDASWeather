@@ -20,14 +20,14 @@
 close all; clear all; clc;
 
 %% DEFINE PATHS AND FILENAMES
-nldasFile = 'FondDuLac.WY83.WY13.1hr.txt';
+nldasFile = 'nldas.1hr.clm.txt';
 
 %% DEFINE LOCATION
 %Note that NLDAS datasets are recorded in UTC (Greenwich Mean Time), so longZ = 0.
-elev = 232; %elevation [m]
-lat = 43.773782; %[degrees]
+elev = 284; %elevation [m]
+lat = 43.087806; %[degrees]
 longZ = 0; %longitude of the center of the local time zone [degrees west of Greenwich]
-longM = 88.448950; %longitude of the measurement site [degrees west of Greenwich]
+longM = 89.430121; %longitude of the measurement site [degrees west of Greenwich]
 
 %% DEFINE TIMING
 %Starting water year-type
@@ -35,8 +35,12 @@ longM = 88.448950; %longitude of the measurement site [degrees west of Greenwich
 %  1 = just after leap year, e.g. WY2001
 %  2 = next year after leap year, e.g. WY2002
 %  3 = next year after that, e.g. WY2003
-startYr = 3; %starting water year type
-nYears = 31; %number of full water years to analyze
+startYr = 1; %starting water year type
+nYears = 1; %number of full water years to analyze
+
+specifiedDays = 1;
+nt=5160;
+JulianDay = floor([91:1/24:305.99]); %Apr 1 --> Nov 1
 
 %% CALCULATE ET0
 %Load forcing data
@@ -52,11 +56,11 @@ q = met(:,8); %specific humidity [kg/kg]
 ET0 = []; startHr = 0;
 for i = 1:nYears
     thisYr = mod(startYr+(i-1),4);
-    if thisYr == 0
+    if (thisYr == 0) && (specifiedDays == 0)
         %Leap year
         nt = 8784;
         JulianDay = floor([(274:1/24:365.99),(1:1/24:274.99)]); %Oct 1 --> Sept 30
-    else
+    elseif (specifiedDays == 0)
         %Not a leap year
         nt=8760; %Number of hours in a year
         JulianDay = floor([(274:1/24:365.99),(1:1/24:273.99)]); %Oct 1 --> Sept 30
