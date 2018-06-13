@@ -42,6 +42,8 @@ for i=1:hours
     omega2 = omega + pi*1/24; %solar time angle at end of period
     sdec = 0.409*sin(2*pi*J/365-1.39); %solar declination
     omegaS = acos(-tan(latRad)*tan(sdec)); %sunset solar angle
+    omegaS1 = omegaS - 0.79; %sunset solar angle start time
+    omegaS2 = omegaS - 0.52; %sunset solar angle end time
     if omega > -omegaS && omega < omegaS
         day = 1; night = 0;
     else day = 0; night = 1;
@@ -54,10 +56,11 @@ for i=1:hours
     delta = 4098*e0/((TC(i)+237.3)^2); %Slope of saturation vapor pressure curve [kPa/degC]
     ea = P(i)*q(i)/(0.622+q(i)); %Actual vapor pressure (from Bolton, 1980), assume sp. hum. = mixing ratio. ea has same units as P [kPa]
     %Radiation
-    Ra = 12*60/pi*0.0820*dr*((omega2-omega1)*sin(latRad)*sin(sdec)+cos(latRad)*cos(sdec)*(sin(omega2)-sin(omega1))); %extraterrestrial radiation [MJ/m^2*hr]
-    Rso = 0.75+(2*10^-5)*elev*Ra; %clear-sky radiation [MJ/m^2*hr]
+    Raday = 12*60/pi*0.0820*dr*((omega2-omega1)*sin(latRad)*sin(sdec)+cos(latRad)*cos(sdec)*(sin(omega2)-sin(omega1))); %extraterrestrial radiation [MJ/m^2*hr]
+    Ranight = 12*60/pi*0.0820*dr*((omegaS2-omegaS1)*sin(latRad)*sin(sdec)+cos(latRad)*cos(sdec)*(sin(omegaS2)-sin(omegaS1))); %extraterrestrial radiation at night[MJ/m^2*hr]
+    Rso = 0.75+(2*10^-5)*elev*(Raday*day + Ranight*night); %clear-sky radiation [MJ/m^2*hr]
     SBconst = (4.903e-9)/24; %Stefan-Boltzman constant [MJ/K^4*m^2*d] --> [MJ/K^4*m^2*hr]
-    Rnl = SBconst*TK(i)^4*(0.34-0.14*sqrt(ea))*(1.35*Rs(i)/Rso-0.35); %net longwave radiation. Thr should be [K] here.
+    Rnl = SBconst*TK(i)^4*(0.34-0.14*sqrt(ea))*(1.35*min(Rs(i)/Rso,1)-0.35); %net longwave radiation. Thr should be [K] here.
     Rns = (1-albedo)*Rs(i); %net shortwave radiation [MJ/m^2*hr]
     Rn = Rns - Rnl; %net radiation
     %Ground Heat
