@@ -1,0 +1,28 @@
+# metInput.sub
+# 2016.09 Carolyn Voter
+# Submit script to generate input files for CLM on CHTC resources
+
+#------------------------
+# ***Run-specific arguments*** must come from DAG
+#------------------------
+universe = vanilla
+executable = /home/cvoter/Parflow/inputs/clm_in/step1_metforcing/metInput.sh
+arguments = "$(locname) $(loc) '$(start)' '$(end)' $(filename) $(njob)"
+output = $(locname).$(loc).$(njob).metInput.out
+error = $(locname).$(loc).$(njob).metInput.err
+log = $(locname).$(loc).$(njob).metInput.log
+
+request_cpus = 1
+request_memory = 4GB
+request_disk = 1GB
+requirements = ( HasGluster == true )
++is_resumable = true
+
+initialdir = /home/cvoter/Parflow/models/$(locname)
+transfer_input_files = /home/cvoter/Parflow/inputs/clm_in/step1_metforcing/batch.get_nldas, \
+/home/cvoter/Parflow/inputs/clm_in/step1_metforcing/wgrib, /home/cvoter/Parflow/inputs/clm_in/step1_metforcing/get_nldas.1D, \
+/home/cvoter/Parflow/inputs/clm_in/step1_metforcing/locations.txt
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT_OR_EVICT
+
+queue
