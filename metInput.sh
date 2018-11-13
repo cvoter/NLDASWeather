@@ -21,8 +21,12 @@ export filename=$5
 export njob=$6
 
 # ESTABLISH DIRECTORIES
-grbDir=/mnt/gluster/cvoter/WY1981_WY2016
-outDir=/mnt/gluster/cvoter/Spinup_in/$locname
+HOME=$(pwd)
+glusterDir=/mnt/gluster/cvoter
+cp $glusterDir/WY1981_WY2018.tar.gz .
+tar xzf WY1981_WY2018.tar.gz
+grbDir=$HOME/WY1981_WY2018
+outDir=/mnt/gluster/cvoter/Weather/$locname
 #move to new location
 if [ ! -e $outDir ]; then
   mkdir $outDir
@@ -49,13 +53,10 @@ sed -i "4s|.*|$start|" batch.get_nldas
 sed -i "5s|.*|$end|" batch.get_nldas
 
 #execute *.f90 file
-./get_nldas.1D &>> NLDAS.$loc.$njob.out
+./get_nldas.1D &>> NLDAS.$locname.$njob.out
 
 #move key files back to gluster
-mv $filename $outDir/$filename
-mv batch.get_nldas $outDir/logs/batch.$loc.$njob.get_nldas
-mv NLDAS.$loc.$njob.out $outDir/logs/
+mv $filename $outDir/NLDAS.1hr.$locname.$njob.txt
+mv batch.get_nldas $outDir/logs/batch.$locname.$njob.get_nldas
+mv NLDAS.$locname.$njob.out $outDir/logs/
 rm *
-
-#for spinups, now copy all other input files into gluster folder
-#cp /mnt/gluster/cvoter/ParflowOut/Spinup_in/allLoc/* $outDir/
