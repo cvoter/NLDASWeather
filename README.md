@@ -27,6 +27,7 @@ The North American Land Data Assimilation (NLDAS) forcing data is hosted by NASA
 10. In your preferred shell terminal, from the working directory to which you saved "myfile.dat", **begin downloading files** with: wget --content-disposition --load-cookies ~/.urs_cookies --save-cookies ~/.urs_cookies --auth-no-challenge=on --keep-session-cookies -i myfile.dat
     - Replace location of name of myfile.dat as needed
     - I always stick with wget, but I believe curl works similarly. Refer to the instructions from NASA in Step #7 if needed.
+    - I have found wget version 1.14 does not work (leads to an "access denied" error). I believe you need wget version 1.18 or later.
     - This can take a very long time - several hours to over a day depending on your connection and how many files you're downloading. On my system, a *.tar.gz file with files for WY1981-WY2016 is 352GB.
 
 ## Reading *.grb files into *.txt files
